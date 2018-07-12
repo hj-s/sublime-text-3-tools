@@ -1,0 +1,115 @@
+%YAML 1.2
+---
+# See http://www.sublimetext.com/docs/3/syntax.html
+file_extensions: [os]
+scope: source.os
+contexts:
+  main:
+    - include: comments
+    - include: string
+    - include: types
+    - include: function_declaration
+    - include: double_quoted_string
+    - include: constants
+
+    - match: '\b(public|private|inherits|package|if|else|for|while|end|return|switch|case|break|elseif|in)\b'
+      scope: keyword.control.os
+
+    - match: (?:\+\+|--)
+      scope: keyword.operator.arithmetic.os
+    - match: '->'
+      scope: punctuation.accessor.os
+    - match: \+\=|-\=|\*\=|/\=|%\=|&\=|\|\=|\^\=|>>\=|<<\=
+      scope: keyword.operator.assignment.augmented.os
+    - match: <<|>>|&&|\|\|
+      scope: keyword.operator.arithmetic.os
+    - match: <\=|>\=|\=\=|<|>|\!\=
+      scope: keyword.operator.comparison.os
+    - match: \+|\-|/|%|\||\^|~|!
+      scope: keyword.operator.arithmetic.os
+    - match: \*|&
+      scope: keyword.operator.os
+    - match: \=
+      scope: keyword.operator.assignment.os
+    - match: '::'
+      scope: keyword.operator.os
+    - match: \$
+      scope: keyword.operator.os
+  
+  types:
+    - match: '\b(Assoc|Dynamic|Integer|RecArray|Record|Frame|Object|DAPINODE|CAPICONNECT|Boolean|Real|List|DAPISESSION|String|DAPIVERSION)\b'
+      scope: storage.type.os
+ 
+  constants:
+    - match: \b(TRUE|FALSE|true|false|undefined|Undefined)\b
+      scope: constant.language.os
+    - match: \b(this|super)\b
+      scope: variable.language.os
+
+  function_declaration:
+    - match: '\b(function|script)\b'
+      scope: storage.type.function.os
+
+  string:
+    - match: "'"
+      scope: punctuation.definition.string.begin.os
+      set:
+        - meta_include_prototype: false
+        - meta_scope: string.quoted.single.os
+        - match: \'
+          scope: punctuation.definition.string.end.os
+          pop: true
+        - match: \n
+          scope: invalid.illegal.newline.os
+          pop: true
+    - match: '"'
+      scope: punctuation.definition.string.begin.os
+      set:
+        - meta_include_prototype: false
+        - meta_scope: string.quoted.double.os
+        - match: \"
+          scope: punctuation.definition.string.end.os
+          pop: true
+        - match: \n
+          scope: invalid.illegal.newline.os
+          pop: true
+    - match: '\b(-)?[0-9.]+\b'
+      scope: constant.numeric.os
+
+  double_quoted_string:
+    - meta_scope: string.quoted.double.os
+    - match: '\\.'
+      scope: constant.character.escape.os
+    - match: '"'
+      scope: punctuation.definition.string.end.os
+      pop: true
+
+  line_comment:
+    - meta_scope: comment.line.os
+    - match: '$'
+      pop: true
+  
+  comments:
+    - match: /\*\*(?!/)
+      scope: punctuation.definition.comment.begin.os
+      push:
+        - meta_include_prototype: false
+        - meta_scope: comment.block.documentation.os
+        - match: \*/
+          scope: punctuation.definition.comment.end.os
+          pop: true
+    - match: /\*
+      scope: punctuation.definition.comment.begin.os
+      push:
+        - meta_include_prototype: false
+        - meta_scope: comment.block.os
+        - match: \*/
+          scope: punctuation.definition.comment.end.os
+          pop: true
+    - match: //
+      scope: punctuation.definition.comment.os
+      push:
+        - meta_include_prototype: false
+        - meta_scope: comment.line.double-slash.os
+        - match: \n
+          pop: true

@@ -5,11 +5,17 @@
 	],
 	"installed_packages":
 	[
+		"Babel",
+		"HTML-CSS-JS Prettify",
 		"JavaScript Enhancements",
 		"JSON Reindent",
 		"MarkdownEditing",
 		"MarkdownPreview",
+		"Mediawiker",
+		"npm",
 		"Package Control",
+		"Terminal",
+		"Terminus",
 		"View In Browser"
 	]
 }
